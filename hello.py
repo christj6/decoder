@@ -64,6 +64,8 @@ totalLetters = len(characters)
 # so the relative frequency of letters goes:
 # E, T, A, O, I, N, S, H, R, D, L, C, U, M, W, F, G, Y, P, B, V, K, J, X, Q, Z
 
+relativeFreq = ['E', 'T', 'A', 'O', 'I', 'N', 'S', 'H', 'R', 'D', 'L', 'C', 'U', 'M', 'W', 'F', 'G', 'Y', 'P', 'B', 'V', 'K', 'J', 'X', 'Q', 'Z']
+
 tupleList = []
 
 for x in set(characters):
@@ -71,12 +73,28 @@ for x in set(characters):
 
 leaderboard = reversed(sorted(tupleList, key = lambda tup: tup[1]))
 
+"""
 for x in leaderboard:
 	letter = x[0]
 	occurrences = x[1]
 	print (letter + " occurs " + str(x[1]) + " times.")
+"""
 
+messageCopy = encodedMessage
+authorCopy = encodedAuthor
 
+i = 0
+
+for x in leaderboard:
+	letter = x[0]
+	messageCopy = letterSwap(messageCopy, x[0], relativeFreq[i])
+	authorCopy = letterSwap(authorCopy, x[0], relativeFreq[i])
+	i += 1
+
+print(messageCopy + " -- " + authorCopy)
+
+"""
 testing = "lemonade"
 testing = letterSwap(testing, 'e', 'l')
 print(testing)
+"""
