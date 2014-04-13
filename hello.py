@@ -24,14 +24,20 @@ def letterSwap (string, a, b):
 			newList += x
 	return newList
 
+# uses text file from http://www.sil.org/linguistics/wordlists/english/wordlist/wordsEn.txt
+# to build dictionary of english words
+with open("wordsEn.txt") as word_file:
+    dictionary = set(word.strip().lower() for word in word_file)
 
-#encodedMessage = "VH ONE WMEYO YNTX GVBXIK SVWC KYY ONEM CXKMW KBP SVWC XBNEDC UKRRVNB, ONE GKB'W CXYU AEW IKZX K DNNP INTVX"
-#encodedAuthor = "LEXBWVB WKMKBWVBN"
+def isWord (word):
+	return word.lower() in dictionary
 
-# text encoded using: http://rumkin.com/tools/cipher/atbash.php
-# text to be encoded borrowed from: http://www.avclub.com/tvclub/neighbors-there-goes-neighbors-hood-203349
-encodedMessage = "Dsl mvvwh z kiverlfhob lm ivvo dsvm"
-encodedAuthor = ""
+
+encodedMessage = "VH ONE WMEYO YNTX GVBXIK SVWC KYY ONEM CXKMW KBP SVWC XBNEDC UKRRVNB, ONE GKB'W CXYU AEW IKZX K DNNP INTVX"
+encodedAuthor = "LEXBWVB WKMKBWVBN"
+
+encodedMessage = encodedMessage.lower()
+encodedAuthor = encodedAuthor.lower()
 
 print(encodedMessage + " -- " + encodedAuthor)
 
@@ -42,6 +48,7 @@ characters = list("")
 for x in words:
 	characters += list(x)
 
+# filter out characters we're not interested in
 characters = [x for x in characters if x != '\'']
 characters = [x for x in characters if x != ',']
 characters = [x for x in characters if x != '.']
@@ -50,7 +57,7 @@ characters = [x for x in characters if x != '(']
 characters = [x for x in characters if x != ')']
 characters = [x for x in characters if x != '-']
 
-totalLetters = len(characters)
+totalLetters = len(characters) # pool size used as the denominator
 
 # using: http://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language
 # e - 12.702 %
@@ -88,27 +95,38 @@ totalLetters = len(characters)
 # common two-letter words:
 # to, i'm, of, me, in, my, ...
 
-relativeFreq = ['E', 'T', 'A', 'O', 'I', 'N', 'S', 'H', 'R', 'D', 'L', 'C', 'U', 'M', 'W', 'F', 'G', 'Y', 'P', 'B', 'V', 'K', 'J', 'X', 'Q', 'Z']
+relativeFreq = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z']
 
-tupleList = []
+tupleList = [] # create tuple where first is letter, second is the # of times that letter appears in the message
 
 for x in set(characters):
 	tupleList.append((x, characters.count(x)))
 
 leaderboard = reversed(sorted(tupleList, key = lambda tup: tup[1]))
 
-# start it off
+# plan is to put lines 108-126 in some kind of loop, iterating through letter swaps until the optimal translation is found
+# copy into new strings to hold onto original message
 messageCopy = encodedMessage
 authorCopy = encodedAuthor
 
+# attempt to decode the message
 i = 0
 for x in leaderboard:
 	letter = x[0]
 	messageCopy = letterSwap(messageCopy, x[0], relativeFreq[i])
 	authorCopy = letterSwap(authorCopy, x[0], relativeFreq[i])
-	print (x[0] + " swapped with " + relativeFreq[i])
+	#print (x[0] + " swapped with " + relativeFreq[i])
 	i += 1
 
+# tally up the number of actual words
+actualWords = 0
+
+for word in messageCopy.split():
+	if isWord(word.lower()):
+		actualWords += 1
+
+# display final message
 print(messageCopy + " -- " + authorCopy)
 
-
+# how close were we?
+print(str(actualWords) + " actual words.")
