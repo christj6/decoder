@@ -1,6 +1,22 @@
 
 # run in cygwin with: python hello.py
 
+# this function takes in a string and two different letters.
+# It returns a string where any instance of letter a is replaced with letter b
+# and vice versa. For example: letterSwap("lemonade", 'e', 'l') = elmonadl
+def letterSwap (string, a, b):
+	letters = list(string)
+	newList = ("")
+	for x in letters:
+		if x == a:
+			newList += b
+		elif x == b:
+			newList += a
+		else:
+			newList += x
+	return newList
+
+
 encodedMessage = "VH ONE WMEYO YNTX GVBXIK SVWC KYY ONEM CXKMW KBP SVWC XBNEDC UKRRVNB, ONE GKB'W CXYU AEW IKZX K DNNP INTVX"
 encodedAuthor = "LEXBWVB WKMKBWVBN"
 print(encodedMessage + " -- " + encodedAuthor)
@@ -59,3 +75,8 @@ for x in leaderboard:
 	letter = x[0]
 	occurrences = x[1]
 	print (letter + " occurs " + str(x[1]) + " times.")
+
+
+testing = "lemonade"
+testing = letterSwap(testing, 'e', 'l')
+print(testing)
