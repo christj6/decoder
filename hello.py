@@ -87,19 +87,15 @@ leaderboard = reversed(sorted(tupleList, key = lambda tup: tup[1]))
 messageCopy = encodedMessage
 authorCopy = encodedAuthor
 
-# K is either A or I (probably)
-messageCopy = letterSwap(messageCopy, 'K', 'A')
+i = 0
 
-# GKB'W might be DON'T or CAN'T
-messageCopy = letterSwap(messageCopy, 'G', 'C')
-messageCopy = letterSwap(messageCopy, 'B', 'N')
-messageCopy = letterSwap(messageCopy, 'W', 'T')
+for x in leaderboard:
+	letter = x[0]
+	messageCopy = letterSwap(messageCopy, x[0], relativeFreq[i])
+	authorCopy = letterSwap(authorCopy, x[0], relativeFreq[i])
+	print (x[0] + " swapped with " + relativeFreq[i])
+	i += 1
 
-# VH might be MY
-messageCopy = letterSwap(messageCopy, 'V', 'M')
-messageCopy = letterSwap(messageCopy, 'H', 'Y')
+print(messageCopy + " -- " + authorCopy)
 
-# ANP -> AND
-messageCopy = letterSwap(messageCopy, 'P', 'D')
 
-print(messageCopy)
