@@ -4,6 +4,11 @@
 # this function takes in a string and two different letters.
 # It returns a string where any instance of letter a is replaced with letter b
 # and vice versa. For example: letterSwap("lemonade", 'e', 'l') = elmonadl
+"""
+testing = "lemonade"
+testing = letterSwap(testing, 'e', 'l')
+print(testing)
+"""
 def letterSwap (string, a, b):
 	letters = list(string)
 	newList = ("")
@@ -64,6 +69,11 @@ totalLetters = len(characters)
 # so the relative frequency of letters goes:
 # E, T, A, O, I, N, S, H, R, D, L, C, U, M, W, F, G, Y, P, B, V, K, J, X, Q, Z
 
+# common letters that are by themselves:
+# a, i
+# common two-letter words:
+# to, i'm, of, me, in, my, ...
+
 relativeFreq = ['E', 'T', 'A', 'O', 'I', 'N', 'S', 'H', 'R', 'D', 'L', 'C', 'U', 'M', 'W', 'F', 'G', 'Y', 'P', 'B', 'V', 'K', 'J', 'X', 'Q', 'Z']
 
 tupleList = []
@@ -73,28 +83,23 @@ for x in set(characters):
 
 leaderboard = reversed(sorted(tupleList, key = lambda tup: tup[1]))
 
-"""
-for x in leaderboard:
-	letter = x[0]
-	occurrences = x[1]
-	print (letter + " occurs " + str(x[1]) + " times.")
-"""
-
+# start it off
 messageCopy = encodedMessage
 authorCopy = encodedAuthor
 
-i = 0
+# K is either A or I (probably)
+messageCopy = letterSwap(messageCopy, 'K', 'A')
 
-for x in leaderboard:
-	letter = x[0]
-	messageCopy = letterSwap(messageCopy, x[0], relativeFreq[i])
-	authorCopy = letterSwap(authorCopy, x[0], relativeFreq[i])
-	i += 1
+# GKB'W might be DON'T or CAN'T
+messageCopy = letterSwap(messageCopy, 'G', 'C')
+messageCopy = letterSwap(messageCopy, 'B', 'N')
+messageCopy = letterSwap(messageCopy, 'W', 'T')
 
-print(messageCopy + " -- " + authorCopy)
+# VH might be MY
+messageCopy = letterSwap(messageCopy, 'V', 'M')
+messageCopy = letterSwap(messageCopy, 'H', 'Y')
 
-"""
-testing = "lemonade"
-testing = letterSwap(testing, 'e', 'l')
-print(testing)
-"""
+# ANP -> AND
+messageCopy = letterSwap(messageCopy, 'P', 'D')
+
+print(messageCopy)
