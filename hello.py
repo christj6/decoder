@@ -1,3 +1,6 @@
+# coding: utf-8
+import unicodedata
+import string
 
 # run in cygwin with: python hello.py
 
@@ -22,8 +25,14 @@ def letterSwap (string, a, b):
 	return newList
 
 
-encodedMessage = "VH ONE WMEYO YNTX GVBXIK SVWC KYY ONEM CXKMW KBP SVWC XBNEDC UKRRVNB, ONE GKB'W CXYU AEW IKZX K DNNP INTVX"
-encodedAuthor = "LEXBWVB WKMKBWVBN"
+#encodedMessage = "VH ONE WMEYO YNTX GVBXIK SVWC KYY ONEM CXKMW KBP SVWC XBNEDC UKRRVNB, ONE GKB'W CXYU AEW IKZX K DNNP INTVX"
+#encodedAuthor = "LEXBWVB WKMKBWVBN"
+
+# text encoded using: http://rumkin.com/tools/cipher/atbash.php
+# text to be encoded borrowed from: http://www.avclub.com/tvclub/neighbors-there-goes-neighbors-hood-203349
+encodedMessage = "Dsl mvvwh z kiverlfhob lm ivvo dsvm"
+encodedAuthor = ""
+
 print(encodedMessage + " -- " + encodedAuthor)
 
 words = encodedMessage.split() + encodedAuthor.split()
@@ -35,6 +44,11 @@ for x in words:
 
 characters = [x for x in characters if x != '\'']
 characters = [x for x in characters if x != ',']
+characters = [x for x in characters if x != '.']
+characters = [x for x in characters if x != '\"']
+characters = [x for x in characters if x != '(']
+characters = [x for x in characters if x != ')']
+characters = [x for x in characters if x != '-']
 
 totalLetters = len(characters)
 
@@ -88,7 +102,6 @@ messageCopy = encodedMessage
 authorCopy = encodedAuthor
 
 i = 0
-
 for x in leaderboard:
 	letter = x[0]
 	messageCopy = letterSwap(messageCopy, x[0], relativeFreq[i])
